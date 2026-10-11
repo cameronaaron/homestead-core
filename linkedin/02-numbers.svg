@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350" role="img" aria-labelledby="title desc">
+<title id="title">Five days, by the numbers.</title>
+<desc id="desc">Lines of Rust, routes, tests, migrations and integrations in the homestead codebase.</desc>
+<rect width="1080" height="1350" fill="#14291e"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="72" y="82" font-size="21" fill="#eac894" font-weight="700" letter-spacing="3">SUN BREWED HOMESTEAD</text>
+<text x="1008" y="82" font-size="18" fill="#a5b8a4" font-family="Menlo, monospace" text-anchor="end">FIELD NOTES / 02</text>
+<path d="M72 113H1008" stroke="#4a6147"/>
+<text x="72" y="219" font-size="72" fill="#f6efdf" font-family="Georgia, serif">Five days,</text>
+<text x="72" y="305" font-size="72" fill="#b8d99b" font-family="Georgia, serif">by the numbers.</text>
+<text x="72" y="370" font-size="34" fill="#b9cbb3">Sept 27 → Oct 1, counted from the repo.</text>
+<rect x="72" y="416" width="456" height="200" rx="18" fill="#0c1b13" stroke="#4a6147"/>
+<text x="108" y="525" font-size="88" fill="#eac894" font-family="Georgia, serif">55k</text>
+<text x="108" y="580" font-size="30" fill="#b9cbb3">lines of Rust, 5 crates</text>
+<rect x="552" y="416" width="456" height="200" rx="18" fill="#0c1b13" stroke="#4a6147"/>
+<text x="588" y="525" font-size="88" fill="#eac894" font-family="Georgia, serif">548</text>
+<text x="588" y="580" font-size="30" fill="#b9cbb3">tests, many against Postgres</text>
+<rect x="72" y="640" width="456" height="200" rx="18" fill="#0c1b13" stroke="#4a6147"/>
+<text x="108" y="749" font-size="88" fill="#eac894" font-family="Georgia, serif">197</text>
+<text x="108" y="804" font-size="30" fill="#b9cbb3">routes: web UI, API, Discord</text>
+<rect x="552" y="640" width="456" height="200" rx="18" fill="#0c1b13" stroke="#4a6147"/>
+<text x="588" y="749" font-size="88" fill="#eac894" font-family="Georgia, serif">54</text>
+<text x="588" y="804" font-size="30" fill="#b9cbb3">SQL migrations</text>
+<rect x="72" y="864" width="936" height="200" rx="18" fill="#0c1b13" stroke="#4a6147"/>
+<text x="108" y="973" font-size="88" fill="#eac894" font-family="Georgia, serif">8</text>
+<text x="190" y="938" font-size="30" fill="#f6efdf" font-weight="700">systems it talks to</text>
+<text x="190" y="982" font-size="28" fill="#b9cbb3">Discord · Linear · GitHub · Buffer</text>
+<text x="190" y="1022" font-size="28" fill="#b9cbb3">Zeffy · Documenso · Resend · Cloudflare</text>
+<rect x="72" y="1088" width="936" height="123" rx="18" fill="#b8d99b" stroke="#b8d99b"/>
+<text x="108" y="1140" font-size="34" fill="#173224" font-weight="700">Size isn’t the point.</text>
+<text x="108" y="1184" font-size="30" fill="#173224">Next: how it stays correct as it grows.</text>
+<path d="M72 1249H1008" stroke="#4a6147"/>
+<text x="72" y="1297" font-size="20" fill="#b7c9b0" letter-spacing="1.5">209 COMMITS · ONE REPO</text>
+<text x="1008" y="1297" font-size="24" fill="#eac894" text-anchor="end">2 / 6</text>
+</g></svg>

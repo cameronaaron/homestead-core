@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  # Line tables keep panic locations but drop most debug info: smaller
+  # test binaries link faster and fit the 10 GB cache. systems.yml reuses
+  # this cache, so it sets the same values.
+  CARGO_PROFILE_DEV_DEBUG: line-tables-only
+  CARGO_PROFILE_TEST_DEBUG: line-tables-only
+
+jobs:
+  # One job: each job is billed as at least a whole minute, and the legal
+  # check takes seconds.
+  test:
+    name: fmt · clippy · test · legal
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_PASSWORD: homestead
+          POSTGRES_DB: homestead
+        ports: ["54329:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@686976e191b89faba57d3206551f0f330d8cb249 # stable
+        with:
+          toolchain: stable
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+        with:
+          shared-key: homestead
+          # Only main's cache is worth keeping; PR caches just evict it.
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+      - run: cargo fmt --all --check
+      - run: cargo clippy --workspace --all-targets -- -D warnings
+      - run: cargo test --workspace
+      # Warms the cache with the debug binary systems.yml builds.
+      - run: cargo build --locked -p homestead-server --bin homestead
+      - name: Metrics check
+        run: ./scripts/check-metrics.test.sh
+      # The nightly database backup (backup.yml) runs these scripts against
+      # production; this proves a dump of a migrated database restores, and
+      # that a schema of Supabase's (here a stand-in `vault`) stays out.
+      - name: Backup restores
+        env:
+          DATABASE_URL: postgres://postgres:homestead@localhost:54329/homestead
+        run: |
+          ./target/debug/homestead migrate
+          docker run --rm --network host -e DATABASE_URL postgres:17-alpine \
+            sh -c 'psql "$DATABASE_URL" -c "create schema vault; create table vault.secrets (id int)"'
+          dump=$(./scripts/backup.sh "$RUNNER_TEMP/backups")
+          if docker run --rm -i postgres:17-alpine pg_restore -l < "$dump" | grep -q ' vault '; then
+            echo "::error::the backup includes the vault schema"; exit 1
+          fi
+          ./scripts/restore-test.sh "$dump"
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        if: ${{ !cancelled() }}
+        with:
+          node-version: 24
+      - name: Worker unit tests
+        if: ${{ !cancelled() }}
+        run: node --test deploy/cloudflare/src/*.test.ts
+      - uses: typst-community/setup-typst@fee4b65b091cc546f02ce3be15fad8760f38a108 # v5
+        if: ${{ !cancelled() }}
+        with:
+          typst-version: "0.15.1"
+      - name: Legal PDFs match their sources
+        if: ${{ !cancelled() }}
+        run: |
+          ./legal/build.sh
+          git diff --exit-code -- legal/ || { echo "::error::legal/*.pdf is stale; run ./legal/build.sh and commit"; exit 1; }

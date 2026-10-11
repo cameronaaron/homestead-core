@@ -1,0 +1,145 @@
+# Sun Brewed Homestead core: application configuration.
+#
+# Everything the app does is configured here, except secrets. Secrets are
+# never written in this file; each integration names the environment
+# variables it needs, and the app refuses to start if an enabled
+# integration is missing one.
+#
+#   HOMESTEAD_CONFIG   path to this file (default: homestead.toml)
+#   DATABASE_URL       Postgres (Supabase: use the session pooler, port 5432)
+#   ADMIN_TOKEN        optional legacy API bearer token (≥ 32 chars); people
+#                      sign in with their own accounts (just user-add)
+#
+# Each system's *shape* (roles, labels, campaign, org…) lives in its own
+# spec file, referenced below and reconciled in both directions by
+# `just systems-sync` plus `just <system>-plan|provision`.
+
+[server]
+# BIND_ADDR in the environment overrides this (containers set 0.0.0.0).
+bind = "127.0.0.1:8080"
+# Mark the session cookie Secure (HTTPS only). Set false only for local http.
+secure_cookies = true
+# Where people reach the app; `just user-add` prints full setup links with it.
+public_url = "https://homestead.example.org"
+# What "today" means for due dates, recurring tasks and the fiscal year (the
+# farm is in Van Nuys). Checked against Postgres's time zone list at startup.
+timezone = "America/Los_Angeles"
+
+# How integration deliveries are retried (see crates/bus).
+[dispatcher]
+batch = 50
+lease_secs = 120
+delivery_timeout_secs = 30
+poll_secs = 5
+max_attempts = 12          # with the backoff below: about 2.4 hours of retries
+backoff_base_secs = 5
+backoff_cap_secs = 3600
+
+# Event kinds: task.created, task.completed, planting.created, harvest.logged,
+# inventory.low_stock, release.signed, release.declined, member.onboarded
+# (someone signed the welcome agreement; the bot also grants their role),
+# animal.adopted,
+# adoption.applied (names the animal only, never the applicant),
+# incident.reported (kind and reference only; off by default: even "an
+# injury was reported" in a shared channel says something about someone)
+
+[discord]
+enabled = true
+spec = "discord/server.toml"
+application_id = "1554000626952704030"
+# Verifies slash-command requests from Discord (public, not secret).
+public_key = "2b609bc6fd00edd8baab10548f6eb9d9347e993a09d753b71c43c6bbb2177b4a"
+# Posted to #farm-feed through DISCORD_WEBHOOK_URL (secret; written to .env
+# by `just discord-provision`).
+events = [
+  "task.created", "task.completed", "planting.created", "harvest.logged",
+  "inventory.low_stock", "release.signed", "release.declined", "member.onboarded",
+  "animal.adopted", "task.deadlines", "digest.daily",
+]
+# Deadline reminders for these Linear projects go to their own channel,
+# posted by the bot (DISCORD_BOT_TOKEN), instead of #farm-feed. Each must be
+# a channel the whole community can't read: reminders name internal tasks.
+deadline_channels = { "Grant writing" = "grant-deadlines" }
+# The Community page shows these channels' latest posts and the server's
+# scheduled events, read with DISCORD_BOT_TOKEN from DISCORD_GUILD_ID. Anyone
+# who can open that page sees them, so each must be readable by the
+# Community role in discord/server.toml; startup refuses any other.
+feed_channels = ["announcements", "events", "general"]
+
+[linear]
+enabled = true
+spec = "linear/workspace.toml"
+# Team key; its id is looked up at startup. Secret: LINEAR_API_KEY.
+team = "SUN"
+# Tasks marked "Also track in Linear" get an issue when created and move to
+# Done when completed. Each issue's id is derived from the task (or the
+# low-stock crossing), so a retry finds the issue instead of duplicating it.
+events = ["task.created", "task.completed", "inventory.low_stock"]
+# Issues filed in Linear come back in as tasks: open ones are imported, and
+# closing an issue closes its task. Pulled on start, every pull_secs while
+# awake, and whenever Today or Tasks is opened with an older pull. 0 = off.
+pull_secs = 300
+
+[buffer]
+enabled = true
+spec = "buffer/account.toml"
+# Harvests and new plantings become "📸 Needs photo" draft ideas, never
+# posts. Secret: BUFFER_API_KEY. The organization is looked up if unset.
+events = ["harvest.logged", "planting.created"]
+# organization_id = ""
+
+[documenso]
+enabled = true
+spec = "documenso/releases.toml"
+# Documenso on Cloudflare Containers (deploy/documenso/cloudflare). Its
+# webhook calls this core's /hooks/documenso. Secrets: DOCUMENSO_API_TOKEN,
+# and DOCUMENSO_WEBHOOK_SECRET for the callback. scripts/onboarding-e2e.sh
+# points a local test at a local instance instead.
+base_url = "https://sign.example.org"
+
+# Personalized grant outreach. Drafting, CSV import and previews always work;
+# enabling delivery additionally requires RESEND_API_KEY. A human must approve
+# each generated campaign before any email can leave the app.
+[grants]
+enabled = false
+endpoint = "https://api.resend.com/emails"
+from = "Sun Brewed Homestead <grants@sunbrewedhomestead.org>" # oss-publish:allow: the org's published addresses
+# The contact address published on sunbrewedhomestead.org.
+reply_to = "sunbrewedhomestead@gmail.com" # oss-publish:allow: the org's published addresses
+max_batch = 25
+
+# Verified by CI; not used by the running app.
+[zeffy]
+spec = "zeffy/campaign.toml"
+
+[github]
+spec = "github/org.toml"
+
+# Private file storage for attachments (photos, vet records, receipts…).
+#   disabled    uploads are refused with an explanation (the default)
+#   filesystem  bytes under `path` (local development only: a Cloudflare
+#               container's disk does not survive a restart)
+#   s3          a private R2 (or any S3) bucket; secrets
+#               ATTACHMENTS_ACCESS_KEY_ID and ATTACHMENTS_SECRET_ACCESS_KEY
+[attachments]
+backend = "disabled"
+endpoint = "https://905346f3b99c907683ddf08ee4886f56.r2.cloudflarestorage.com"
+bucket = "homestead-attachments"
+# Copied nightly by .github/workflows/backup.yml, with its own keys (never
+# the app's). Both buckets and their locks: scripts/r2-setup.sh.
+backup_bucket = "homestead-attachments-backup"
+region = "auto"
+max_bytes = 10485760   # 10 MiB
+link_secs = 300        # how long a download link works
+# A deleted file's bytes stay (restorable with `attachment-restore <id>`)
+# this long, then the hourly schedule purges them. Keep it at least the
+# bucket lock's age (30 days on homestead-attachments), or purges are
+# refused until the lock lets go.
+retain_deleted_days = 30
+
+# The farm stand's printed sign (Farm stand → Stand sign). Each pay link is
+# shown as a QR code customers scan to pay. None are set yet: add the
+# stand's real Venmo or Zeffy link, for example
+#   pay_links = [{ label = "Venmo @your-handle", url = "https://venmo.com/u/your-handle" }]
+[stand]
+pay_links = []

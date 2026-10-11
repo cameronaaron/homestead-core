@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350" role="img">
+<title>Sun Brewed Homestead: Goats, gardens and 55,000 lines of Rust</title>
+<rect width="1080" height="1350" fill="#f6efdf"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="72" y="82" font-size="21" fill="#806035" font-weight="700" letter-spacing="3">SUN BREWED HOMESTEAD</text>
+<text x="1008" y="82" font-size="18" fill="#536649" text-anchor="end" font-family="Menlo, monospace">FIELD NOTES / 01</text>
+<path d="M72 113H1008" stroke="#cabb9f"/>
+<text x="72" y="224" font-size="83" fill="#223c2b" font-family="Georgia, serif">Goats. Gardens.</text><text x="72" y="318" font-size="83" fill="#223c2b" font-family="Georgia, serif">A cat rescue.</text><text x="72" y="412" font-size="83" fill="#47733e" font-family="Georgia, serif">55,000 lines of Rust.</text><text x="76" y="479" font-size="34" fill="#223c2b" >The software behind a community homestead in Van Nuys.</text><svg x="0" y="540" width="1080" height="520" viewBox="0 200 1920 880" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE9C2"/><stop offset="0.6" stop-color="#FBD9A0"/><stop offset="1" stop-color="#F6C98A"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFE08A"/><stop offset="0.65" stop-color="#F6B042"/><stop offset="1" stop-color="#E58F22"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFF3D1" stop-opacity="0.9"/><stop offset="1" stop-color="#FFF3D1" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="far" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9CC27A"/><stop offset="1" stop-color="#7AAA5C"/></linearGradient>
+    <linearGradient id="near" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5E9E4A"/><stop offset="1" stop-color="#2F6B2F"/></linearGradient>
+    <linearGradient id="soil" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7A4E2D"/><stop offset="1" stop-color="#4A2C19"/></linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <circle cx="1580" cy="590" r="480" fill="url(#glow)"/>
+  <circle cx="1580" cy="630" r="220" fill="url(#sun)"/>
+  <path d="M0 640 C 300 560, 620 560, 900 610 C 1180 660, 1500 560, 1920 600 L1920 1080 L0 1080Z" fill="url(#far)"/>
+  <path d="M0 760 C 380 680, 760 690, 1100 730 C 1420 768, 1700 700, 1920 720 L1920 1080 L0 1080Z" fill="url(#near)"/>
+  <path d="M0 880 C 500 830, 1400 830, 1920 870 L1920 1080 L0 1080Z" fill="url(#soil)"/>
+  <g fill="none" stroke="#9C6A40" stroke-width="10" stroke-linecap="round" opacity="0.75">
+    <path d="M40 960 C 600 915, 1320 915, 1880 955"/><path d="M0 1040 C 600 995, 1320 995, 1920 1035"/>
+  </g>
+  <g transform="translate(760,890) scale(0.90)"><path d="M0 0 C 0 -30, -2 -52, 0 -70" stroke="#2F6B2F" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M0 -44 C -26 -46, -46 -64, -48 -90 C -20 -88, -2 -70, 0 -44Z" fill="#6DB24F"/><path d="M0 -58 C 24 -64, 44 -84, 46 -110 C 18 -106, 0 -86, 0 -58Z" fill="#8CCB5E"/></g>
+  <g transform="translate(870,896) scale(1.02)"><path d="M0 0 C 0 -30, -2 -52, 0 -70" stroke="#2F6B2F" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M0 -44 C -26 -46, -46 -64, -48 -90 C -20 -88, -2 -70, 0 -44Z" fill="#6DB24F"/><path d="M0 -58 C 24 -64, 44 -84, 46 -110 C 18 -106, 0 -86, 0 -58Z" fill="#8CCB5E"/></g>
+  <g transform="translate(980,890) scale(1.14)"><path d="M0 0 C 0 -30, -2 -52, 0 -70" stroke="#2F6B2F" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M0 -44 C -26 -46, -46 -64, -48 -90 C -20 -88, -2 -70, 0 -44Z" fill="#6DB24F"/><path d="M0 -58 C 24 -64, 44 -84, 46 -110 C 18 -106, 0 -86, 0 -58Z" fill="#8CCB5E"/></g>
+  <g transform="translate(1090,896) scale(0.90)"><path d="M0 0 C 0 -30, -2 -52, 0 -70" stroke="#2F6B2F" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M0 -44 C -26 -46, -46 -64, -48 -90 C -20 -88, -2 -70, 0 -44Z" fill="#6DB24F"/><path d="M0 -58 C 24 -64, 44 -84, 46 -110 C 18 -106, 0 -86, 0 -58Z" fill="#8CCB5E"/></g>
+  <g transform="translate(1200,890) scale(1.02)"><path d="M0 0 C 0 -30, -2 -52, 0 -70" stroke="#2F6B2F" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M0 -44 C -26 -46, -46 -64, -48 -90 C -20 -88, -2 -70, 0 -44Z" fill="#6DB24F"/><path d="M0 -58 C 24 -64, 44 -84, 46 -110 C 18 -106, 0 -86, 0 -58Z" fill="#8CCB5E"/></g>
+  <g transform="translate(1310,896) scale(1.14)"><path d="M0 0 C 0 -30, -2 -52, 0 -70" stroke="#2F6B2F" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M0 -44 C -26 -46, -46 -64, -48 -90 C -20 -88, -2 -70, 0 -44Z" fill="#6DB24F"/><path d="M0 -58 C 24 -64, 44 -84, 46 -110 C 18 -106, 0 -86, 0 -58Z" fill="#8CCB5E"/></g>
+  <g transform="translate(1420,890) scale(0.90)"><path d="M0 0 C 0 -30, -2 -52, 0 -70" stroke="#2F6B2F" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M0 -44 C -26 -46, -46 -64, -48 -90 C -20 -88, -2 -70, 0 -44Z" fill="#6DB24F"/><path d="M0 -58 C 24 -64, 44 -84, 46 -110 C 18 -106, 0 -86, 0 -58Z" fill="#8CCB5E"/></g>
+  <g transform="translate(1530,896) scale(1.02)"><path d="M0 0 C 0 -30, -2 -52, 0 -70" stroke="#2F6B2F" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M0 -44 C -26 -46, -46 -64, -48 -90 C -20 -88, -2 -70, 0 -44Z" fill="#6DB24F"/><path d="M0 -58 C 24 -64, 44 -84, 46 -110 C 18 -106, 0 -86, 0 -58Z" fill="#8CCB5E"/></g>
+  <!-- chickens -->
+  <g fill="#FFF6E6" stroke="#5B3A22" stroke-width="5">
+    <ellipse cx="520" cy="815" rx="46" ry="32"/><circle cx="560" cy="790" r="18"/>
+  </g>
+  <path d="M572 786 l14 4 -14 5z" fill="#E58F22"/><path d="M552 772 q8 -14 14 0" fill="#D9432B"/><circle cx="564" cy="787" r="3" fill="#2B1B10"/>
+  <g stroke="#5B3A22" stroke-width="5" stroke-linecap="round"><line x1="510" y1="845" x2="506" y2="866"/><line x1="530" y1="845" x2="534" y2="866"/></g>
+  <g fill="#C46A2F" stroke="#5B3A22" stroke-width="5">
+    <ellipse cx="640" cy="835" rx="40" ry="28"/><circle cx="675" cy="812" r="16"/>
+  </g>
+  <path d="M686 809 l13 4 -13 4z" fill="#E58F22"/><path d="M668 796 q7 -12 13 0" fill="#D9432B"/><circle cx="679" cy="809" r="3" fill="#2B1B10"/>
+  <!-- goat -->
+  <g fill="#F4EFE6" stroke="#4A3A2C" stroke-width="6" stroke-linejoin="round">
+    <path d="M250 770 C 250 735, 290 720, 350 722 C 400 724, 430 740, 432 770 C 434 800, 400 810, 350 810 C 300 810, 250 805, 250 770Z"/>
+    <path d="M420 745 C 440 720, 470 700, 488 708 C 500 714, 498 740, 480 752 C 468 760, 440 765, 425 765Z"/>
+  </g>
+  <path d="M470 706 C 468 690, 478 676, 492 672" stroke="#4A3A2C" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M482 752 q-2 18 -10 26" stroke="#4A3A2C" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <circle cx="478" cy="722" r="4" fill="#2B1B10"/>
+  <g stroke="#4A3A2C" stroke-width="9" stroke-linecap="round"><line x1="280" y1="805" x2="278" y2="850"/><line x1="315" y1="808" x2="317" y2="852"/><line x1="385" y1="808" x2="383" y2="852"/><line x1="412" y1="800" x2="416" y2="846"/></g>
+  <!-- cat -->
+  <g fill="#3B2F2A">
+    <path d="M1690 858 C 1690 820, 1712 800, 1740 800 C 1768 800, 1788 822, 1786 858Z"/>
+    <path d="M1718 806 l-10 -26 22 16z M1760 806 l10 -26 -22 16z"/>
+    <path d="M1786 850 C 1820 848, 1830 820, 1818 800" stroke="#3B2F2A" stroke-width="10" fill="none" stroke-linecap="round"/>
+  </g>
+  <circle cx="1728" cy="822" r="4" fill="#F6B042"/><circle cx="1752" cy="822" r="4" fill="#F6B042"/>
+</svg>
+<rect x="72" y="1044" width="936" height="156" rx="18" fill="#173224" stroke="#173224"/>
+<text x="108" y="1094" font-size="36" fill="#fff2d9" font-weight="700">209 commits. 5 days. In production.</text>
+<text x="108" y="1138" font-size="34" fill="#c0d4b5" >First commit Sept 27. Swipe for how it holds up →</text>
+<text x="108" y="1181" font-size="34" fill="#c0d4b5" >Tests that read the code. A merge for dashboards.</text>
+<path d="M72 1249H1008" stroke="#cabb9f"/>
+<text x="72" y="1297" font-size="20" fill="#536649" letter-spacing="1.5">A FARM. A COMMUNITY. A CODEBASE.</text>
+<text x="1008" y="1297" font-size="24" fill="#806035" text-anchor="end">1 / 6</text>
+</g></svg>

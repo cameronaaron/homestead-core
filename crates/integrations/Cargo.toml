@@ -1,0 +1,38 @@
+[package]
+name = "homestead-integrations"
+description = "Sinks and inbound adapters for outside systems (Discord, Linear)."
+edition.workspace = true
+version.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[dependencies]
+ed25519-dalek.workspace = true
+hex.workspace = true
+hmac.workspace = true
+homestead-bus.workspace = true
+homestead-domain.workspace = true
+homestead-store.workspace = true
+form_urlencoded.workspace = true
+reqwest.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+subtle.workspace = true
+thiserror.workspace = true
+time.workspace = true
+tokio.workspace = true
+toml.workspace = true
+uuid.workspace = true
+tracing.workspace = true
+
+[dev-dependencies]
+ed25519-dalek = { workspace = true, features = ["rand_core"] }
+rust_decimal.workspace = true
+sqlx.workspace = true
+tokio.workspace = true
+uuid.workspace = true
+wiremock.workspace = true
+
+[lints]
+workspace = true

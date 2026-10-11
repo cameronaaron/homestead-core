@@ -1,0 +1,30 @@
+# Sun Brewed Homestead — Buffer (social media scheduling), as code.
+#
+# Buffer's API can't connect social accounts or rename the organization;
+# those are logins in Buffer's web app. So this file is verified, not
+# applied: `homestead buffer-verify` (run by CI) warns about anything below
+# that isn't done yet.
+#
+# What the homestead core does with Buffer: when a harvest or a new planting
+# is logged, it saves a draft *Idea* in Buffer, never a scheduled post. A
+# person picks the photo (with no faces or kids unless they've agreed, per
+# our Discord #rules) and approves it.
+
+[account]
+# Rename "My organization" in Buffer → Settings → Organization.
+organization = "Sun Brewed Homestead"
+
+# Social channels that should be connected (Buffer → Channels → Connect).
+# Buffer's free plan allows 3. Instagram must be a Business or Creator
+# account linked to our Facebook Page. Buffer does not support Nextdoor.
+[[channels]]
+service = "instagram"
+handle = "sunbrewedhomestead"
+
+[[channels]]
+service = "facebook"
+handle = "sunbrewedhomestead"
+
+# Hashtags appended to every draft idea.
+[drafts]
+hashtags = ["#sunbrewedhomestead", "#vannuys", "#sanfernandovalley", "#urbanhomestead", "#growyourown"]

@@ -1,0 +1,56 @@
+# Sun Brewed Homestead — GitHub organization, as code.
+#
+#   homestead github-provision            # show the plan (read-only)
+#   homestead github-provision --apply    # make GitHub match this file
+#
+# Access is granted through teams, never per person per repo. Nothing
+# outside this file is removed: extra members, teams or repos are reported
+# as unmanaged. Adding someone under [[members]] sends them an invitation.
+
+[org]
+login = "Sunbrewed-Homestead"
+name = "Sun Brewed Homestead"
+description = "Sowing sustainability, growing community. A 501(c)(3) community homestead in Van Nuys, CA."
+blog = "https://sunbrewedhomestead.org"
+location = "Van Nuys, CA"
+# Our code is proprietary: members see only what their teams grant.
+default_repository_permission = "none"
+# Only owners create repos. GitHub's free plan can't allow private-only
+# member repo creation (the org PATCH fails with 422), so the choice is
+# both or neither.
+members_can_create_public_repositories = false
+members_can_create_private_repositories = false
+# Checked, not set: GitHub's API can't turn this on. Enable it under
+# Settings → Authentication security once every member has 2FA.
+require_two_factor = true
+
+# Any other organization setting, by its REST API field name
+# (docs.github.com/rest/orgs/orgs#update-an-organization).
+[org.settings]
+web_commit_signoff_required = false
+
+[[members]]
+login = "cameronaaron"
+role = "admin"
+
+# Repo access levels: read, triage, write, maintain, admin.
+[[teams]]
+name = "Stewards"
+description = "Founders and admins: full control of the homestead's code and systems."
+maintainers = ["cameronaaron"]
+members = []
+repos = { homestead = "admin" }
+
+[[teams]]
+name = "Tech"
+description = "Builds and runs the homestead core app and its integrations."
+maintainers = ["cameronaaron"]
+members = []
+repos = { homestead = "maintain" }
+
+# Repositories. A missing one is created private. `settings` takes any
+# field of GitHub's "Update a repository" API; GitHub's own extra fields
+# are ignored, so a nested table only needs the parts you care about.
+[[repos]]
+name = "homestead"
+settings = { description = "Sun Brewed Homestead operations core: farm app, and Discord/Linear/Zeffy as code. Proprietary — all rights reserved.", private = true, has_issues = true, has_projects = true, has_wiki = false, has_discussions = false, allow_merge_commit = true, allow_squash_merge = true, allow_rebase_merge = true, delete_branch_on_merge = false, allow_auto_merge = false }

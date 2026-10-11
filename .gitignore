@@ -1,0 +1,13 @@
+/target
+.env
+.env.*
+!.env.example
+/zeffy/campaign-kit.html
+/homestead.local.toml
+backups/
+
+# Finder "duplicate" copies (name 2.ext); never meant to be committed.
+* [0-9].*
+* [0-9]
+rustc-ice-*.txt
+.wrangler/

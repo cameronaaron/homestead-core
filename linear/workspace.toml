@@ -1,0 +1,246 @@
+# Sun Brewed Homestead — Linear workspace, as code.
+#
+#   homestead linear-provision            # show the plan (read-only)
+#   homestead linear-provision --apply    # make Linear match this file
+#
+# Matched by name. Nothing that isn't in this file is deleted or renamed:
+# issues, extra labels and projects people create by hand are left alone.
+
+[team]
+key = "SUN"
+name = "Sunbrewed Homestead"
+description = "Everything it takes to run the homestead: garden, animals, Kiki's Cat Club, workshops, farm stand and the community around them."
+timezone = "America/Los_Angeles"
+
+# Any other team setting, by its Linear API name (see TeamUpdateInput in
+# Linear's GraphQL schema). A …StateId may name a workflow state.
+[team.settings]
+cyclesEnabled = false
+triageEnabled = false
+issueEstimationType = "notUsed"
+# Months before closed issues are archived / stale issues auto-close.
+autoArchivePeriod = 6
+autoClosePeriod = 6
+autoCloseStateId = "Canceled"
+
+# Workflow states to ensure exist (Linear's defaults are kept as they are).
+[[states]]
+name = "Waiting"
+type = "started"
+color = "#E2963B"
+description = "Blocked on something outside our hands: supplies, weather, the vet, a volunteer."
+
+# Labels. A group's children appear as "Area → Garden" in Linear.
+[[label_groups]]
+name = "Area"
+color = "#C7771B"
+description = "Which part of the homestead this touches."
+
+  [[label_groups.labels]]
+  name = "Garden"
+  color = "#3D7A3A"
+  description = "Beds, plantings, compost, soil, irrigation."
+
+  [[label_groups.labels]]
+  name = "Animals"
+  color = "#8C5A2B"
+  description = "Goats and chickens: feed, health, housing."
+
+  [[label_groups.labels]]
+  name = "Kiki's Cat Club"
+  color = "#6B5B95"
+  description = "Rescue cats, fostering and adoption events."
+
+  [[label_groups.labels]]
+  name = "Farm Stand"
+  color = "#D9A441"
+  description = "Harvest to stand: pricing, stock, market days."
+
+  [[label_groups.labels]]
+  name = "Workshops"
+  color = "#4E9A3E"
+  description = "Free community workshops and Composting 101."
+
+  [[label_groups.labels]]
+  name = "Volunteers"
+  color = "#7FB3D5"
+  description = "Work days, shifts, onboarding and thanks."
+
+  [[label_groups.labels]]
+  name = "Fundraising"
+  color = "#E2963B"
+  description = "Zeffy, grants, donors and receipts."
+
+  [[label_groups.labels]]
+  name = "Facilities"
+  color = "#9C6A40"
+  description = "Fences, structures, tools, water and power."
+
+  [[label_groups.labels]]
+  name = "Outreach"
+  color = "#D9432B"
+  description = "Instagram, Facebook, Nextdoor, newsletter."
+
+  [[label_groups.labels]]
+  name = "Tech"
+  color = "#5E6AD2"
+  description = "Homestead core app, Discord, Linear, automation."
+
+[[label_groups]]
+name = "Season"
+color = "#F2C94C"
+description = "When this work has to happen."
+
+  [[label_groups.labels]]
+  name = "Spring"
+  color = "#8CCB5E"
+
+  [[label_groups.labels]]
+  name = "Summer"
+  color = "#F6B042"
+
+  [[label_groups.labels]]
+  name = "Fall"
+  color = "#C46A2F"
+
+  [[label_groups.labels]]
+  name = "Winter"
+  color = "#7FB3D5"
+
+[[label_groups]]
+name = "Working group"
+color = "#A3B18A"
+description = "Which working group picks this up. Matches the Discord roles of the same name."
+
+  [[label_groups.labels]]
+  name = "Grants & Business"
+  color = "#E2963B"
+  description = "Grant writing, sponsors, budgets, compliance and paperwork."
+
+  [[label_groups.labels]]
+  name = "Farm & Labor"
+  color = "#8CCB5E"
+  description = "Work days, builds, planting and animal chores."
+
+  [[label_groups.labels]]
+  name = "Social Media"
+  color = "#D9432B"
+  description = "Instagram, Facebook, Nextdoor, photos and the website."
+
+# Projects. `status` is a Linear project status name. `content` seeds the
+# project's document when it's created; after that it belongs to the team
+# and is never overwritten from here.
+[[projects]]
+name = "Grow the Valley campaign"
+status = "Planned"
+color = "#E2963B"
+description = "Build, review and launch our $15,000 Zeffy campaign (kept private until launch)."
+content = """
+The campaign lives in `zeffy/campaign.toml` in the homestead repo, which CI checks against Zeffy.
+
+**Launch checklist**
+- [ ] Build the form in Zeffy from the spec, and leave it in Draft
+- [ ] Board reviews goal and budget
+- [ ] Spanish translation reviewed by a native speaker
+- [ ] Flip `status` to "active" in the spec, then publish in Zeffy
+- [ ] Announce on Instagram, Facebook, Nextdoor and in Discord
+"""
+
+[[projects]]
+name = "Discord community launch"
+status = "In Progress"
+color = "#5865F2"
+description = "Our Discord server, roles and channels, managed from discord/server.toml."
+content = """
+- [ ] Add the bot token as a GitHub secret so CI can apply the server spec
+- [ ] Give founders the Steward role
+- [ ] Invite crew, volunteers and neighbours
+"""
+
+[[projects]]
+name = "Homestead core app"
+status = "In Progress"
+color = "#3D7A3A"
+description = "The farm-operations app: tasks, garden, harvests, inventory and integrations."
+content = """
+- [ ] Choose hosting and turn on the deploy job
+- [ ] Point core.sunbrewedhomestead.org at it (Wix DNS)
+- [ ] Register Discord slash commands against the public URL
+"""
+
+[[projects]]
+name = "Community workshop series"
+status = "Planned"
+color = "#4E9A3E"
+description = "A year of free hands-on workshops for the Valley: gardening, Composting 101, seed starting."
+
+[[projects]]
+name = "Kiki's Cat Club adoptions"
+status = "Planned"
+color = "#6B5B95"
+description = "Adoption events, fostering and vet care for our rescue cats."
+
+[[projects]]
+name = "Grant writing"
+status = "In Progress"
+color = "#E2963B"
+description = "Find, write and track grant applications. Outreach letters live in the core app's Grant studio."
+content = """
+The core app's **Grant studio** (/grants) holds letter templates and funder contacts, and sends reviewed batches.
+
+- [ ] Hold a group grant-writing session
+- [ ] Build a shortlist of funders with deadlines (one issue per application)
+- [ ] Write a reusable boilerplate: mission, programs, numbers, budget
+"""
+
+[[projects]]
+name = "Nonprofit compliance"
+status = "In Progress"
+color = "#6B5B95"
+description = "The filings, registrations and insurance that keep our 501(c)(3) in good standing. See docs/COMPLIANCE.md."
+
+[[projects]]
+name = "Chicken coop build"
+status = "In Progress"
+color = "#8C5A2B"
+description = "Enough dry, predator-proof roosting space for the whole flock (about 26 birds); today about a quarter fit."
+
+[[projects]]
+name = "CRFG Small Space Gardening event"
+status = "Planned"
+color = "#4E9A3E"
+description = "California Rare Fruit Growers event, likely the last week of November 2026. We've been asked to speak."
+
+[[projects]]
+name = "Website refresh"
+status = "Planned"
+color = "#D9432B"
+description = "sunbrewedhomestead.org (Wix): fix stale and placeholder pages, route sign-ups to us."
+
+[[projects]]
+name = "Fall Volunteer Day"
+status = "Planned"
+color = "#8CCB5E"
+description = "Saturday, October 24, 2026: two raised beds, garden fencing, compost, cleanup and seed starting."
+content = """
+**On the day**
+- [ ] Build and fill two raised garden beds
+- [ ] Secure the garden fencing
+- [ ] Composting
+- [ ] Cleaning
+- [ ] Seed starting
+
+**Before the day**
+- [ ] Pick a regular weekend day to meet until the 24th
+- [ ] Finish the chicken coop (see the Chicken coop build project)
+"""
+
+# ── People ────────────────────────────────────────────────────────────────────
+#
+# Email = workspace role: "admin", "member" or "guest". Anyone missing is
+# invited to the workspace and this team, and listed people's roles and
+# team membership are kept in line. Nobody is ever removed: people who
+# aren't listed are reported as unmanaged. The workspace owner stays owner.
+[members]
+"steward@example.org" = "admin"
+"sunbrewedhomestead@gmail.com" = "admin" # oss-publish:allow: the org's shared mailbox

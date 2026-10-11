@@ -1,0 +1,397 @@
+# Sun Brewed Homestead — Discord server, as code.
+#
+#   homestead discord-provision            # show the plan (read-only)
+#   homestead discord-provision --apply    # make the server match this file
+#
+# Re-running is safe: things are matched by name and only changed when they
+# differ. Nothing that isn't in this file is ever deleted. It is reported
+# as "unmanaged" instead, so you can tidy by hand.
+#
+# In topics and messages, <#channel-name> becomes a clickable channel link.
+#
+# Access model: people join from the link on Instagram (<core>/join): they
+# sign the welcome agreement first, then connect Discord; the bot adds that
+# exact account as a Volunteer. Anyone who came in another way holds no
+# role and sees only "Start here", which points them to the same link (or
+# /onboard). The daily sync writes new role holders under [members] below;
+# change their roles there. `readers` can see a
+# category/channel; `writers` (default: every reader) can post. Stewards
+# have Administrator and see everything. "@everyone" means every member.
+
+[server]
+name = "Sun Brewed Homestead"
+# 1 = members need a verified email before they can talk.
+verification_level = 1
+# 1 = notify only on @mentions (farm chatter shouldn't buzz every phone).
+default_message_notifications = 1
+# 2 = scan media from everyone.
+explicit_content_filter = 2
+# Where Discord posts "X joined" messages.
+system_channel = "welcome"
+# Discord's own #general is adopted into Community below; its now-empty
+# starter categories and "General" voice channel are removed.
+remove_starter_channels = true
+# Brand: warm sun amber for the bot's cards; the homestead mark as icon/avatar.
+accent = "#E2963B"
+icon = "brand/mark-1024.png"
+bot_avatar = "brand/mark-1024.png"
+
+# What every member can do, before any channel restrictions.
+everyone_permissions = [
+  "view_channel", "send_messages", "send_messages_in_threads", "create_public_threads",
+  "embed_links", "attach_files", "read_message_history", "add_reactions",
+  "use_external_emojis", "use_external_stickers", "use_application_commands",
+  "change_nickname", "connect", "speak", "stream", "use_vad",
+  "send_voice_messages", "send_polls",
+]
+
+# Anything else Discord lets a server change, by its API field name
+# (discord.com/developers/docs/resources/guild#modify-guild). A
+# *_channel_id may name a channel. Each channel takes the same kind of table
+# for Modify Channel fields: slowmode, nsfw, user_limit, bitrate…
+#   settings = { rate_limit_per_user = 60 }
+# A field Discord doesn't recognise fails the apply by name, rather than
+# being silently ignored.
+[server.settings]
+preferred_locale = "en-US"
+afk_timeout = 300
+# description = "A community homestead and 501(c)(3) in Van Nuys."
+# afk_channel_id = "Farmhouse"
+
+# Roles, highest first. Ordering is what Discord shows in the member list.
+[[roles]]
+name = "Steward"
+color = "#C7771B"
+hoist = true
+mentionable = true
+about = "Founders/admins: full control."
+permissions = ["administrator"]
+
+[[roles]]
+name = "Farm Lead"
+color = "#3D7A3A"
+hoist = true
+mentionable = true
+about = "Runs day-to-day operations; moderates."
+permissions = [
+  "manage_messages", "manage_threads", "manage_events", "create_events",
+  "moderate_members", "kick_members", "mention_everyone", "create_instant_invite",
+  "manage_nicknames", "mute_members", "move_members", "priority_speaker", "view_audit_log",
+]
+
+[[roles]]
+name = "Board"
+color = "#6B5B95"
+hoist = true
+mentionable = true
+about = "Nonprofit board: leadership + read-only view of operations."
+permissions = []
+
+[[roles]]
+name = "Crew"
+color = "#D9A441"
+hoist = true
+mentionable = true
+about = "Core team working the farm."
+permissions = ["create_instant_invite", "create_events", "create_private_threads"]
+
+[[roles]]
+name = "Volunteer"
+color = "#7FB3D5"
+hoist = true
+mentionable = true
+about = "Volunteers: shifts, training, community."
+permissions = []
+
+[[roles]]
+name = "Community"
+color = "#A3B18A"
+hoist = false
+mentionable = false
+about = "Neighbours, members, supporters."
+permissions = []
+
+# Working groups: who to ping for which kind of work. They grant no
+# permissions; each opens the one channel where its work is planned, and a
+# person also holds an access role (Volunteer, Crew…) for everything else.
+[[roles]]
+name = "Grants & Business"
+color = "#E2963B"
+hoist = false
+mentionable = true
+about = "Working group: grant writing, sponsors, budgets and paperwork."
+permissions = []
+
+[[roles]]
+name = "Farm & Labor"
+color = "#8CCB5E"
+hoist = false
+mentionable = true
+about = "Working group: work days, builds, planting and animal chores."
+permissions = []
+
+[[roles]]
+name = "Social Media"
+color = "#D9432B"
+hoist = false
+mentionable = true
+about = "Working group: Instagram, Facebook, Nextdoor and photos."
+permissions = []
+
+# ── People ────────────────────────────────────────────────────────────────────
+#
+# Discord username (the unique @handle on their profile, not their display
+# name) = the roles above they should hold. Usernames with a "." need quotes:
+#   "kiki.sun" = ["Volunteer"]
+#
+# Listed people get exactly these roles; any other role from this file is
+# taken away. Roles outside this file are left alone.
+# Someone who hasn't joined yet is reported as pending (a bot can't add
+# people to a server); send them the invite link and re-run once they're in.
+# Removing a line leaves that person's roles as they are. To take access
+# away, set their list to [] instead. Unlisted people are reported as
+# "unmanaged" with the roles they hold. (The bot needs Server Members
+# Intent on, under Developer Portal → Bot.)
+[members]
+kamiof2000 = ["Steward", "Volunteer"]
+rtocastro3982 = ["Volunteer"]
+"capt.outlaw" = ["Board", "Farm Lead", "Farm & Labor", "Social Media", "Grants & Business", "Volunteer", "Steward", "Community", "Crew"]
+
+# ── Channels ──────────────────────────────────────────────────────────────────
+
+[[categories]]
+name = "📌 Start here"
+readers = ["@everyone"]
+writers = ["Farm Lead"]
+
+  [[categories.channels]]
+  name = "welcome"
+  topic = "Welcome to Sun Brewed Homestead 🌞 Read <#rules>, then sign our welcome agreement at https://homestead.example.org/join to open the channels."
+  title = "Welcome to Sun Brewed Homestead 🌞"
+  message = """
+*Sowing sustainability, growing community.*
+
+We're a community homestead on Woodman Avenue in Van Nuys, and a 501(c)(3) nonprofit. We believe everyone deserves the chance to grow their own food, care for animals and live a little more self-sufficiently, and that it's easier together.
+
+**What happens here**
+🌱 Free hands-on workshops: gardening, Composting 101, seed starting
+🐐 Our goats and chickens
+🐈 **Kiki's Cat Club**: rescue cats looking for homes
+🧺 The farm stand
+
+**Getting started**
+1. Read <#rules>.
+2. Can only see this channel? Sign our welcome agreement at https://homestead.example.org/join (about five minutes on a phone): how we work together, the liability waiver, photo permission and keeping each other's information private.
+3. Connect Discord and the **Volunteer** channels open automatically—no command or username needed.
+
+Joining the core team as **Crew**, or a working group? A steward adds that once you've signed.
+
+🌐 [sunbrewedhomestead.org](https://sunbrewedhomestead.org) · 📸 [Instagram](https://www.instagram.com/sunbrewedhomestead/) · 👍 [Facebook](https://www.facebook.com/sunbrewedhomestead/) · 🏡 [Nextdoor](https://nextdoor.com/pages/sun-brewed-homestead-van-nuys-ca/)
+"""
+
+  [[categories.channels]]
+  name = "rules"
+  topic = "How we look after each other here."
+  title = "House rules 🌻"
+  message = """
+1. **Be kind.** Everyone here is growing something, including themselves.
+2. **Safety first.** Tools, animals and heat are real. If something's unsafe, say so in <#daily-log> or tell a Farm Lead.
+3. **Ask before you post people.** Especially kids at workshops. Animals and veggies are always fair game. 🐐
+4. **Keep it on-topic.** Use threads for long conversations.
+5. **No spam, selling or recruiting** without asking a steward first.
+6. **Board and money matters stay in Leadership.**
+
+Breaking these can get you muted or removed. Questions? Ask a **Farm Lead** or **Steward**.
+"""
+
+  [[categories.channels]]
+  name = "announcements"
+  topic = "Official news from the homestead. Only leads post here."
+
+[[categories]]
+name = "🌻 Community"
+readers = ["Community", "Volunteer", "Crew", "Farm Lead", "Board"]
+
+  [[categories.channels]]
+  name = "general"
+  topic = "Anything homestead-related."
+
+  [[categories.channels]]
+  name = "introductions"
+  topic = "Say hi: who you are and what brings you here."
+
+  [[categories.channels]]
+  name = "photos"
+  topic = "Harvests, critters, sunsets. Great shots may be shared on our socials (we'll ask first)."
+
+  [[categories.channels]]
+  name = "events"
+  topic = "Work days, markets, adoption days and open farm days."
+
+  [[categories.channels]]
+  name = "workshops"
+  topic = "Free hands-on workshops: gardening, Composting 101, seed starting. Schedules, sign-ups and what to bring."
+
+  [[categories.channels]]
+  name = "kikis-cat-club"
+  topic = "🐈 Kiki's Cat Club: adoptable cats, fostering and adoption events."
+
+  [[categories.channels]]
+  name = "farm-stand"
+  topic = "🧺 What's fresh at the farm stand this week."
+
+  [[categories.channels]]
+  name = "questions"
+  topic = "Growing questions, homestead questions, any questions."
+
+[[categories]]
+name = "🙋 Volunteers"
+readers = ["Volunteer", "Crew", "Farm Lead"]
+
+  [[categories.channels]]
+  name = "volunteer-chat"
+  topic = "Coordination and chat for volunteers."
+
+  [[categories.channels]]
+  name = "shift-signups"
+  topic = "Post and claim work-day shifts. One thread per work day."
+
+  [[categories.channels]]
+  name = "volunteer-guide"
+  topic = "How-tos, safety briefings and what to bring. Leads post; ask questions in <#volunteer-chat>."
+  writers = ["Farm Lead"]
+  title = "🦝 When wildlife turns up"
+  pinned = true
+  message = """
+**Call first. Do not capture, handle, confine, feed or water wildlife without guidance from a trained professional.** Keep children, dogs and the farm animals away. Never drop an animal off unless a rehabilitator tells you to.
+
+If an animal is visibly injured, sick or orphaned:
+1. Call a permitted rehabilitator before moving it. They may tell you to leave a healthy youngster for its parent.
+2. If a professional tells you to contain it, use gloves and a ventilated box in a dark, quiet place, away from people and animals.
+3. An unpermitted person may confine it for **no more than 24 hours**. Within that same 24 hours, give the rehabilitator or CDFW your name and phone, the species, its condition, when and where it was found, and where it is confined. CDFW Wildlife Health Lab: **(916) 358-2790** / **RehabWildlife@wildlife.ca.gov**.
+4. Post what happened and where the animal went in <#daily-log>.
+
+**Los Angeles County permitted rehabilitators — call ahead; capacity changes**
+• California Wildlife Center, Malibu — **(310) 458-9453** — mammals, birds, reptiles
+• Pasadena Humane Society — **(626) 344-1129** — mammals, birds, reptiles
+• Coast & Canyon Wildlife, Malibu — **(310) 480-1760** — mammals, birds
+• Antelope Valley Wildlife Rescue, Lancaster — **(661) 272-4551** — mammals, birds
+• Cleo's Critter Care, Pasadena — **(626) 715-0262** — mammals
+• Squirrel Whisperer, Santa Clarita — **(661) 251-7978** — small mammals
+• International Bird Rescue, San Pedro — **(310) 514-2573** — birds
+• San Dimas Raptor Rescue — **(909) 599-7512** — birds of prey
+• LA Bat Rescue, Manhattan Beach — **(310) 365-5656** — bats
+
+[CDFW finder guidance](https://wildlife.ca.gov/Conservation/Laboratories/Wildlife-Health/Rehab/Sick-Injured) · [current facility list](https://wildlife.ca.gov/Conservation/Laboratories/Wildlife-Health/Rehab/Facilities) · [current §679 rules](https://wildlife.ca.gov/Conservation/Laboratories/Wildlife-Health/Rehab/Regulations)
+"""
+
+[[categories]]
+name = "🚜 Farm ops"
+readers = ["Crew", "Farm Lead", "Board"]
+writers = ["Crew", "Farm Lead"]
+
+  [[categories.channels]]
+  name = "daily-log"
+  topic = "What happened today: weather, chores done, anything unusual."
+
+  [[categories.channels]]
+  name = "tasks"
+  topic = "Work that needs doing. Tracked in the homestead app; use /task to add one."
+  # Also open to the Farm & Labor working group, who may not be Crew.
+  readers = ["Crew", "Farm Lead", "Board", "Farm & Labor"]
+  writers = ["Crew", "Farm Lead", "Farm & Labor"]
+
+  [[categories.channels]]
+  name = "garden"
+  topic = "Beds, plantings, pests, soil, succession plans."
+
+  [[categories.channels]]
+  name = "animals"
+  topic = "Flock and herd care: feeding, health, eggs, coop and pen upkeep."
+
+  [[categories.channels]]
+  name = "harvest-and-farm-stand"
+  topic = "What's ready, what's picked, what goes on the stand."
+
+  [[categories.channels]]
+  name = "cat-club-ops"
+  topic = "Kiki's Cat Club behind the scenes: intakes, fosters, vet visits, adoption paperwork."
+
+  [[categories.channels]]
+  name = "workshop-planning"
+  topic = "Planning the free workshop series: topics, teachers, materials, sign-ups."
+
+  [[categories.channels]]
+  name = "supplies"
+  topic = "Feed, seed, amendments and tools: what's low and what to buy."
+
+  [[categories.channels]]
+  name = "repairs-and-irrigation"
+  topic = "Water lines, timers, fences, structures, tools that need fixing."
+
+  [[categories.channels]]
+  name = "social-media"
+  topic = "Planning posts for Instagram/Facebook/Nextdoor."
+  # Also open to the Social Media working group, who may not be Crew.
+  readers = ["Crew", "Farm Lead", "Board", "Social Media"]
+  writers = ["Crew", "Farm Lead", "Social Media"]
+
+[[categories]]
+name = "🤖 Homestead core"
+readers = ["Crew", "Farm Lead", "Board"]
+writers = ["Crew", "Farm Lead"]
+
+  [[categories.channels]]
+  name = "farm-feed"
+  topic = "Live feed from the homestead app: tasks, plantings, harvests, low-stock alerts. Posted automatically."
+  writers = []
+  # The homestead core posts here through this webhook (DISCORD_WEBHOOK_URL).
+  webhook = "Homestead Core"
+
+  [[categories.channels]]
+  name = "ops-bot"
+  # Say /tasks, /lowstock and /task here once the core app is hosted and
+  # `homestead discord-register` has run; until then, don't promise them.
+  topic = "Coming soon: ask the homestead app for open tasks and low stock, right from Discord. 🌱"
+
+[[categories]]
+name = "🏛️ Leadership"
+readers = ["Farm Lead", "Board"]
+
+  [[categories.channels]]
+  name = "leadership"
+  topic = "Planning and decisions."
+
+  [[categories.channels]]
+  name = "fundraising"
+  topic = "Donations (Zeffy: Grow the Valley), grants, donor relations."
+  # Also open to the Grants & Business working group; the rest of
+  # Leadership (decisions, finance) stays board-only.
+  readers = ["Farm Lead", "Board", "Grants & Business"]
+
+  [[categories.channels]]
+  name = "grant-deadlines"
+  topic = "One post per grant: funder, due date, what it needs, who's on it. Tracked in Linear under Grant writing."
+  readers = ["Farm Lead", "Board", "Grants & Business"]
+
+  [[categories.channels]]
+  name = "finance"
+  topic = "Budget, expenses, receipts."
+
+[[categories]]
+name = "🔊 Voice"
+readers = ["Community", "Volunteer", "Crew", "Farm Lead", "Board"]
+
+  [[categories.channels]]
+  name = "Farmhouse"
+  kind = "voice"
+
+  [[categories.channels]]
+  name = "Crew Huddle"
+  kind = "voice"
+  readers = ["Crew", "Farm Lead"]
+
+  [[categories.channels]]
+  name = "Leadership Room"
+  kind = "voice"
+  readers = ["Farm Lead", "Board"]

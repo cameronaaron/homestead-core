@@ -1,0 +1,52 @@
+# Self-hosted Documenso for Sun Brewed Homestead (legal releases).
+# Based on Documenso's production compose file:
+# https://docs.documenso.com/docs/self-hosting/deployment/docker-compose
+#
+#   cp env.example .env && edit .env        # secrets, URL, SMTP
+#   ./make-cert.sh                           # signing certificate
+#   docker compose up -d
+#
+# Then in Documenso: create the Stewards' account, an API token
+# (→ DOCUMENSO_API_TOKEN for the homestead core) and a webhook to
+# https://<core>/hooks/documenso for DOCUMENT_COMPLETED and DOCUMENT_REJECTED
+# with the same secret as DOCUMENSO_WEBHOOK_SECRET.
+name: documenso
+
+services:
+  database:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:?err}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?err}
+      - POSTGRES_DB=${POSTGRES_DB:?err}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - database:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  documenso:
+    image: documenso/documenso:v2.19.0 # match deploy/documenso/cloudflare/Dockerfile
+    depends_on:
+      database:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      - NEXT_PRIVATE_DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}
+      - NEXT_PRIVATE_DIRECT_DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}
+      - NEXT_PRIVATE_SIGNING_TRANSPORT=local
+      - NEXT_PRIVATE_SIGNING_LOCAL_FILE_PATH=/opt/documenso/cert.p12
+      # Volunteers' legal documents live here: send nothing to Documenso's
+      # analytics. https://docs.documenso.com/.../telemetry
+      - DOCUMENSO_DISABLE_TELEMETRY=true
+    ports:
+      - ${PORT:-3000}:3000
+    volumes:
+      - ./cert.p12:/opt/documenso/cert.p12:ro
+    restart: unless-stopped
+
+volumes:
+  database:

@@ -1,0 +1,181 @@
+# Sun Brewed Homestead — Zeffy campaign, as code.
+#
+# Zeffy's API is read-only: campaigns can only be created or edited in the
+# Zeffy dashboard. This file is the source of truth for what the campaign
+# should say, and `homestead zeffy-verify` (run by CI) checks the live
+# campaign against it: title, goal, currency, and above all that it stays
+# private (Draft) until `status` below is changed to "active".
+#
+# The sections follow Zeffy's builder in order (Campaigns → Create →
+# Donation form), so a person can build it top to bottom.
+#
+# Goal and budget are a proposal based on our programs; adjust them here
+# and the verifier follows.
+
+[campaign]
+# The title becomes the form URL at first save and can't change afterwards.
+title = "Grow the Valley"
+# "draft" = private: unpublished, no share link. Change to "active" to launch.
+status = "draft"
+goal_usd = 15000
+currency = "usd"
+language = "en"
+# Van Nuys is majority Spanish-speaking; Zeffy can translate the form.
+translations = ["es"]
+
+[appearance]
+theme = "light"
+shapes = false
+banner = "brand/zeffy-banner-1920x1080.png"   # 16:9, no text (Zeffy prints the title)
+logo = "brand/mark-1024.png"
+
+[description]
+headline = "Help us grow food, skills and community in the heart of the Valley."
+body = """
+Sun Brewed Homestead is a community homestead on Woodman Avenue in Van Nuys. \
+We believe everyone deserves the chance to grow their own food, care for \
+animals, and live a little more self-sufficiently, and that it's easier \
+when we do it together.
+
+**Your gift keeps our gate open to the Valley:**
+
+🌱 **Free community workshops.** Hands-on gardening, Composting 101, seed \
+starting and more, free for neighbours of every age.
+
+🐐 **Goats and chickens.** Feed, bedding, vet care and safe housing for the \
+animals who teach our visitors where food comes from.
+
+🐈 **Kiki's Cat Club.** Vaccines, spay/neuter and adoption events that find \
+rescue cats their forever homes.
+
+🧺 **Farm stand and tools.** Seeds, soil, irrigation and tools that turn a \
+backyard into a working homestead.
+
+Sun Brewed Homestead Inc. is a 501(c)(3) public charity (EIN 92-0510478). \
+Every donation is tax-deductible, and because Zeffy is free for nonprofits, \
+100% of your gift reaches the homestead.
+
+*Sowing sustainability, growing community.*
+"""
+
+# Where the $15,000 goes (shown in the description and used for fund designation).
+[[budget]]
+fund = "Community workshops"
+usd = 6000
+detail = "Materials, seeds, soil and tools for 24 free workshops a year."
+
+[[budget]]
+fund = "Goats & chickens"
+usd = 4000
+detail = "A year of feed, bedding and routine vet care."
+
+[[budget]]
+fund = "Kiki's Cat Club"
+usd = 3000
+detail = "Vaccines, spay/neuter and supplies for adoption events."
+
+[[budget]]
+fund = "Farm stand & tools"
+usd = 2000
+detail = "Irrigation repairs, hand tools and farm-stand supplies."
+
+# Step 7: amounts and frequencies. Impact lines appear when a donor taps an amount.
+[giving]
+frequencies = ["one_time", "monthly", "yearly"]
+default_frequency = "one_time"
+default_amount_usd = 50
+
+[[giving.one_time]]
+usd = 25
+impact = "A season of seeds for one community garden bed."
+
+[[giving.one_time]]
+usd = 50
+impact = "Compost, tools and materials for one neighbour at a hands-on workshop."
+
+[[giving.one_time]]
+usd = 100
+impact = "A week of feed and fresh bedding for our goats and chickens."
+
+[[giving.one_time]]
+usd = 250
+impact = "Vaccines and spay/neuter for one Kiki's Cat Club rescue."
+
+[[giving.one_time]]
+usd = 500
+impact = "Sponsors a full free workshop for the Valley."
+
+[[giving.monthly]]
+usd = 10
+impact = "Keeps the compost cooking all year."
+
+[[giving.monthly]]
+usd = 20
+impact = "Feeds a hen and keeps the eggs coming for the farm stand."
+
+[[giving.monthly]]
+usd = 35
+impact = "Covers a cat's food and litter while they wait for a home."
+
+[[giving.monthly]]
+usd = 60
+impact = "Underwrites one free workshop every season."
+
+[[giving.yearly]]
+usd = 120
+impact = "A full year of seeds for our community beds."
+
+[[giving.yearly]]
+usd = 365
+impact = "A dollar a day for the homestead: our Sunrise Circle."
+
+# Step 8
+[receipts]
+tax_receipts = true
+
+# Step 9: custom questions (Zeffy already collects name, email, state, country).
+[[questions]]
+kind = "fund_designation"
+label = "Where should your gift grow?"
+options = ["Where it's needed most", "Community workshops", "Goats & chickens", "Kiki's Cat Club", "Farm stand & tools"]
+default = "Where it's needed most"
+required = false
+
+[[questions]]
+kind = "single_select"
+label = "How did you hear about us?"
+options = ["Instagram", "Facebook", "Nextdoor", "Our farm stand", "A workshop or event", "A friend", "Other"]
+required = false
+
+[[questions]]
+kind = "multi_select"
+label = "Want to get your hands dirty? (optional)"
+options = ["Tell me about volunteer days", "Tell me about upcoming workshops", "I'm interested in adopting a cat"]
+required = false
+
+# Step 10
+[thank_you_email]
+subject = "Thank you for growing the Valley with us 🌱"
+body = """
+Hi {first_name},
+
+Thank you! Your gift to Sun Brewed Homestead is already at work: in the \
+soil, in the goat pen, and in the hands of neighbours learning to grow \
+their own food.
+
+We'd love to show you what you helped grow. Come by the farm stand, join a \
+workshop, or follow along on Instagram @sunbrewedhomestead.
+
+Your tax receipt is attached. Sun Brewed Homestead Inc. is a 501(c)(3) \
+public charity, EIN 92-0510478.
+
+With sunshine and gratitude,
+The whole Sun Brewed Homestead crew
+"""
+
+# Step 12: advanced settings
+[advanced]
+honorary_donations = true      # "in honour / in memory of" gifts
+public_donor_list = false      # donors' privacy by default
+thermometer = true             # show progress toward the goal
+check_donations = true

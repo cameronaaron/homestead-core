@@ -1,0 +1,10 @@
+# Nothing secret or local enters the build context.
+target
+.git
+**/.env
+**/.env.*
+**/*.p12
+deploy
+homestead.local.toml
+.playwright-mcp
+zeffy/campaign-kit.html

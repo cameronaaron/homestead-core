@@ -1,0 +1,18 @@
+[package]
+name = "homestead-domain"
+description = "Farm-operations types, validation rules and the integration event catalog. No I/O."
+edition.workspace = true
+version.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[dependencies]
+rust_decimal.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+time.workspace = true
+uuid.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,36 @@
+// Sun Brewed Homestead core on Cloudflare Containers.
+//
+//   cd deploy/cloudflare && npm ci && npx wrangler deploy
+//
+// Cost is capped by design: at most ONE container (max_instances), of the
+// smallest type (lite: 1/16 vCPU, 256 MiB; the core uses ~13 MiB), and it
+// sleeps 10 minutes after the last request, costing nothing while asleep.
+// See README.md here for the arithmetic, and the always-on option.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "homestead-core",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "observability": { "enabled": true },
+  "containers": [
+    {
+      "class_name": "Core",
+      // The repo's production Dockerfile, built from the repo root.
+      "image": "../../Dockerfile",
+      "image_build_context": "../..",
+      "instance_type": "lite",
+      "max_instances": 1
+    }
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "CORE", "class_name": "Core" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Core"] }],
+  // Once a day, not a keep-alive: wakes the core so deadline reminders go
+  // out even when nobody opens the app (15:00 UTC = 8 am PDT / 7 am PST).
+  // It sleeps again 10 minutes later. A keep-alive would bill the
+  // container AND its Durable Object around the clock; to run always-on
+  // (Discord slash commands), make this "*/5 * * * *" after reading the
+  // always-on section of README.md.
+  "triggers": { "crons": ["0 15 * * *"] }
+}

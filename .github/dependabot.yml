@@ -1,0 +1,40 @@
+version: 2
+updates:
+  - package-ecosystem: cargo
+    directory: /
+    schedule: { interval: weekly }
+    cooldown: { default-days: 7 }
+    groups:
+      rust:
+        patterns: ["*"]
+  - package-ecosystem: npm
+    directory: /deploy/cloudflare
+    schedule: { interval: weekly }
+    cooldown: { default-days: 7 }
+    groups:
+      cloudflare-core:
+        patterns: ["*"]
+  - package-ecosystem: npm
+    directory: /deploy/documenso/cloudflare
+    schedule: { interval: weekly }
+    cooldown: { default-days: 7 }
+    groups:
+      cloudflare-documenso:
+        patterns: ["*"]
+  - package-ecosystem: docker
+    directory: /
+    schedule: { interval: weekly }
+    cooldown: { default-days: 7 }
+  - package-ecosystem: docker
+    directory: /deploy/documenso/cloudflare
+    schedule: { interval: daily }
+    cooldown: { default-days: 7 }
+  - package-ecosystem: docker-compose
+    directory: /deploy/documenso
+    schedule: { interval: daily }
+    cooldown: { default-days: 7 }
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: weekly }
+    cooldown: { default-days: 7 }
+

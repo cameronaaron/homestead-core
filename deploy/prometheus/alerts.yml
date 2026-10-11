@@ -1,0 +1,44 @@
+# Alert rules for the series on GET /api/v1/metrics (systems read).
+# Scrape that path with a service token. A missing restore test is NaN and
+# does not fire the stale-restore alert here; scripts/check-metrics.sh (run
+# nightly by .github/workflows/backup.yml) treats it as a failure, and keeps
+# these same limits. The core's own request counters restart from zero each
+# time its container wakes (it sleeps after 10 idle minutes), so the Worker
+# also counts the 5xx it sends: homestead_edge_server_errors_*.
+
+groups:
+  - name: homestead
+    rules:
+      - alert: HomesteadDeadLetters
+        expr: homestead_bus_events{state="dead"} > 0
+        for: 15m
+        labels:
+          severity: page
+        annotations:
+          summary: Integration deliveries are dead-lettered
+          description: Retry them from Integrations. A dead letter is a delivery that stopped retrying.
+
+      - alert: HomesteadRestoreTestStale
+        expr: homestead_last_restore_test_age_seconds > 8 * 24 * 3600
+        for: 1h
+        labels:
+          severity: ticket
+        annotations:
+          summary: The last successful Postgres restore test is more than 8 days old
+          description: The Backup workflow drills every Sunday, so 8 days means a drill was missed.
+
+      - alert: HomesteadHttpServerErrors
+        expr: sum(rate(homestead_http_requests_total{class="5xx"}[5m])) > 0
+        for: 10m
+        labels:
+          severity: page
+        annotations:
+          summary: Homestead is returning server errors
+
+      - alert: HomesteadEdgeServerErrors
+        expr: homestead_edge_server_errors_24h > 0
+        labels:
+          severity: page
+        annotations:
+          summary: The Worker sent server errors in the last 24 hours
+          description: Counted by the Worker itself, so it survives the core sleeping and restarting.

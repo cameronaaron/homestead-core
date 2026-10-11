@@ -1,0 +1,22 @@
+[package]
+name = "homestead-bus"
+description = "Integration bus: the Sink contract and the outbox dispatcher."
+edition.workspace = true
+version.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[dependencies]
+homestead-domain.workspace = true
+homestead-store.workspace = true
+sqlx.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+
+[dev-dependencies]
+rust_decimal.workspace = true
+uuid.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,38 @@
+[
+  {
+    "kind": "SIGNATURE",
+    "page": 1,
+    "label": "Signature",
+    "x": 10.588,
+    "y": 77.727,
+    "width": 41.176,
+    "height": 5.0
+  },
+  {
+    "kind": "DATE",
+    "page": 1,
+    "label": "Date",
+    "x": 56.471,
+    "y": 77.727,
+    "width": 32.941,
+    "height": 5.0
+  },
+  {
+    "kind": "NAME",
+    "page": 1,
+    "label": "Printed name",
+    "x": 10.588,
+    "y": 85.909,
+    "width": 41.176,
+    "height": 4.091
+  },
+  {
+    "kind": "EMAIL",
+    "page": 1,
+    "label": "Email",
+    "x": 56.471,
+    "y": 85.909,
+    "width": 32.941,
+    "height": 4.091
+  }
+]

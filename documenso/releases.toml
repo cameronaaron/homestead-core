@@ -1,0 +1,163 @@
+# Sun Brewed Homestead — legal releases sent for e-signature via Documenso.
+#
+# Each release is a PDF built from legal/*.typ (`just legal`), plus the
+# signing fields its layout drew (legal/<name>.fields.json, written by the
+# same build). The homestead core sends them straight from these files, so
+# there are no Documenso-side templates, or coordinates here, to drift.
+
+# Safety gate. Until `approved = true` the core refuses to send any of these
+# for signature and every PDF carries a DRAFT watermark (`just legal`
+# re-renders them after a change).
+#
+# The steward approved them for use on 2026-09-29 WITHOUT attorney review:
+# they follow standard California forms (Civil Code § 1542 waiver, AB 506
+# youth-safety duties, Corporations Code § 5227), but no lawyer has read
+# them. `just documenso-verify` keeps reporting that until a California
+# attorney has, and `reviewed_by_counsel` is set to true.
+approved = true
+reviewed_by_counsel = false
+
+# Documenso envelope settings for every release, by API name (the `meta` of
+# /api/v2/envelope/create: language, timezone, dateFormat, redirectUrl,
+# reminderSettings, emailSettings…). A release can override any of them
+# with its own `meta = { … }`. `just documenso-verify` checks each name
+# against the instance, because Documenso would silently ignore a typo.
+[meta]
+timezone = "America/Los_Angeles"
+dateFormat = "MM/dd/yyyy"
+# Production Documenso has no SMTP yet, so it can't email anyone. With NONE
+# it doesn't try: the Releases page shows each signing link for the sender
+# to text, DM, or open on a phone at the gate. Remove this once SMTP is set
+# up (deploy/documenso/cloudflare/README.md) to have Documenso email them.
+distributionMethod = "NONE"
+
+# Everything someone joining signs (a new volunteer, crew or community
+# member), in one document, signed once: how we work together, the liability
+# waiver, photo permission and mutual confidentiality. /onboard sends it.
+[[releases]]
+key = "onboarding"
+title = "Welcome Agreement"
+pdf = "legal/onboarding.pdf"
+source = "legal/onboarding.typ"
+subject = "Please sign: your Sun Brewed Homestead welcome agreement"
+message = "Welcome to Sun Brewed Homestead! This agreement starts with a short summary in plain words, then covers how we work together, the liability release (you'll initial it), photo permission and confidentiality. Add an emergency contact and sign once; it takes about five minutes."
+details = [
+  { key = "emergency_contact", label = "Emergency contact (name)", by = "signer" },
+  { key = "emergency_phone", label = "Emergency contact phone", by = "signer" },
+]
+
+[[releases]]
+key = "liability-waiver"
+title = "Liability Waiver"
+pdf = "legal/liability-waiver.pdf"
+source = "legal/liability-waiver.typ"
+subject = "Please sign: Sun Brewed Homestead liability waiver"
+message = "Thanks for joining us at Sun Brewed Homestead! Before your first visit or volunteer day, please review and sign our liability waiver. It takes about two minutes."
+
+[[releases]]
+key = "photo-release"
+title = "Photo Release"
+pdf = "legal/photo-release.pdf"
+source = "legal/photo-release.typ"
+subject = "Please sign: Sun Brewed Homestead photo release"
+message = "We love sharing what happens at the homestead. This release lets us include photos and video of you (or your child) in our posts, newsletters and grant reports. It starts with a short summary in plain words. You can withdraw it any time in writing."
+
+[[releases]]
+key = "nda"
+title = "Mutual Confidentiality Agreement"
+pdf = "legal/nda.pdf"
+source = "legal/nda.typ"
+subject = "Please sign: Sun Brewed Homestead mutual confidentiality agreement"
+message = "As part of the crew you'll see private information about our donors, members and finances, and we hold private information about you. This agreement is our promise to each other to protect it."
+
+[[releases]]
+key = "volunteer-agreement"
+title = "Volunteer Agreement"
+pdf = "legal/volunteer-agreement.pdf"
+source = "legal/volunteer-agreement.typ"
+subject = "Please sign: Sun Brewed Homestead volunteer agreement"
+message = "Welcome to the crew! This agreement covers how we look after each other, the animals and the tools, and who to call if something happens to you. It takes about three minutes."
+details = [
+  { key = "emergency_contact", label = "Emergency contact (name)", by = "signer" },
+  { key = "emergency_phone", label = "Emergency contact phone", by = "signer" },
+]
+
+[[releases]]
+key = "cat-adoption"
+title = "Cat Adoption Agreement"
+pdf = "legal/cat-adoption.pdf"
+source = "legal/cat-adoption.typ"
+subject = "Please sign: your Kiki's Cat Club adoption agreement"
+message = "Congratulations on your new cat! Please review and sign the adoption agreement. It covers the cat's care, microchip and what to do if you ever can't keep them."
+details = [
+  { key = "cat", label = "Cat's name and description", by = "sender" },
+  { key = "microchip", label = "Microchip number", by = "sender" },
+  { key = "fee", label = "Adoption fee (USD)", by = "sender" },
+]
+
+[[releases]]
+key = "cat-foster"
+title = "Cat Foster Agreement"
+pdf = "legal/cat-foster.pdf"
+source = "legal/cat-foster.typ"
+subject = "Please sign: Kiki's Cat Club foster care agreement"
+message = "Thank you for opening your home to a foster cat! Please review and sign the foster agreement before your cat comes home with you."
+details = [
+  { key = "cats", label = "Cat(s) in foster care", by = "sender" },
+  { key = "start", label = "Foster start date", by = "sender" },
+]
+
+[[releases]]
+key = "cat-surrender"
+title = "Cat Surrender Agreement"
+pdf = "legal/cat-surrender.pdf"
+source = "legal/cat-surrender.typ"
+subject = "Please sign: Kiki's Cat Club surrender agreement"
+message = "Thank you for trusting Kiki's Cat Club with your cat. Please review and sign the surrender agreement, and tell us everything you know about their health and behavior."
+details = [
+  { key = "cat", label = "Cat's name and description", by = "sender" },
+  { key = "history", label = "Known health or behavior issues (or \"none\")", by = "signer" },
+]
+
+[[releases]]
+key = "conflict-of-interest"
+title = "Conflict of Interest Statement"
+pdf = "legal/conflict-of-interest.pdf"
+source = "legal/conflict-of-interest.typ"
+subject = "Please sign: annual conflict of interest statement"
+message = "As a director, officer or committee member, please review our conflict of interest policy and sign this year's statement, listing any interests the board should know about."
+details = [
+  { key = "role", label = "Your role (director, officer or committee)", by = "signer" },
+  { key = "interests", label = "Interests to disclose (or \"none\")", by = "signer" },
+]
+
+# What the app's send form offers to preselect. The first is the default.
+[[bundles]]
+key = "onboarding"
+title = "Joining (welcome agreement)"
+releases = ["onboarding"]
+
+[[bundles]]
+key = "visitor"
+title = "Visitor or workshop participant"
+releases = ["liability-waiver", "photo-release"]
+
+[[bundles]]
+key = "board"
+title = "Board member (yearly)"
+releases = ["conflict-of-interest", "nda"]
+
+[[bundles]]
+key = "adoption"
+title = "Cat adoption"
+releases = ["cat-adoption"]
+
+[[bundles]]
+key = "foster"
+title = "Cat foster"
+releases = ["cat-foster", "liability-waiver"]
+
+[[bundles]]
+key = "surrender"
+title = "Cat surrender"
+releases = ["cat-surrender"]

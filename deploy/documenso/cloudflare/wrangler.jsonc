@@ -1,0 +1,41 @@
+// Sun Brewed Homestead's Documenso (legal releases) on Cloudflare Containers.
+//
+//   cd deploy/documenso/cloudflare && npm ci && npx wrangler deploy
+//
+// Documenso needs native Node modules (Prisma's engine, Skia, argon2), so it
+// can't run as a plain Worker or on Pages; it runs as its official image.
+// Its Node server uses ~410 MB, so `basic` (1 GiB); lite's 256 MiB is too
+// small. At most one instance, sleeping 15 minutes after the last request:
+// about a cent per hour awake, nothing asleep. See README.md.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "homestead-sign",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "observability": { "enabled": true },
+  "containers": [
+    {
+      "class_name": "Documenso",
+      "image": "./Dockerfile",
+      "instance_type": "basic",
+      "max_instances": 1
+    }
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "DOCUMENSO", "class_name": "Documenso" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Documenso"] }],
+  // Non-secret settings. Secrets (database, keys, certificate) are set with
+  // `wrangler secret put`; see README.md for the list.
+  "vars": {
+    "NEXT_PUBLIC_WEBAPP_URL": "https://sign.example.org",
+    "NEXT_PRIVATE_INTERNAL_WEBAPP_URL": "http://localhost:3000",
+    "NEXT_PRIVATE_SIGNING_TRANSPORT": "local",
+    // Signed releases include volunteers' personal details: no analytics.
+    "DOCUMENSO_DISABLE_TELEMETRY": "true",
+    // Only stewards have accounts; nobody signs up from the internet.
+    "NEXT_PUBLIC_DISABLE_SIGNUP": "true",
+    "NEXT_PRIVATE_SMTP_FROM_NAME": "Sun Brewed Homestead",
+    "PORT": "3000"
+  }
+}

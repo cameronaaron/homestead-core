@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Sun Brewed Homestead mark: a sun rising over a planted hill, a sprout at its heart. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF4DC"/>
+      <stop offset="1" stop-color="#FBE3B4"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.45" r="0.6">
+      <stop offset="0" stop-color="#FFD36B"/>
+      <stop offset="0.7" stop-color="#F2A93B"/>
+      <stop offset="1" stop-color="#E08A1E"/>
+    </radialGradient>
+    <linearGradient id="hill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5E9E4A"/>
+      <stop offset="1" stop-color="#2F6B2F"/>
+    </linearGradient>
+    <linearGradient id="soil" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7A4E2D"/>
+      <stop offset="1" stop-color="#4E2F1B"/>
+    </linearGradient>
+    <clipPath id="disc"><circle cx="512" cy="512" r="512"/></clipPath>
+  </defs>
+  <g clip-path="url(#disc)">
+    <rect width="1024" height="1024" fill="url(#sky)"/>
+    <!-- rays -->
+    <g stroke="#F2A93B" stroke-width="30" stroke-linecap="round" opacity="0.9">
+      <line x1="512" y1="150" x2="512" y2="225"/>
+      <line x1="300" y1="238" x2="345" y2="298"/>
+      <line x1="724" y1="238" x2="679" y2="298"/>
+      <line x1="165" y1="410" x2="238" y2="432"/>
+      <line x1="859" y1="410" x2="786" y2="432"/>
+    </g>
+    <circle cx="512" cy="560" r="235" fill="url(#sun)"/>
+    <!-- hill with furrows -->
+    <path d="M-20 700 C 200 590, 380 575, 512 590 C 660 606, 830 600, 1044 690 L1044 1044 L-20 1044 Z" fill="url(#hill)"/>
+    <path d="M-20 820 C 220 760, 800 760, 1044 830 L1044 1044 L-20 1044 Z" fill="url(#soil)"/>
+    <g fill="none" stroke="#9C6A40" stroke-width="12" stroke-linecap="round" opacity="0.8">
+      <path d="M60 900 C 300 850, 720 850, 964 905"/>
+      <path d="M20 975 C 300 925, 720 925, 1004 980"/>
+    </g>
+    <!-- sprout -->
+    <path d="M512 800 C 512 720, 508 660, 512 600" stroke="#2F6B2F" stroke-width="26" fill="none" stroke-linecap="round"/>
+    <path d="M512 660 C 440 650, 380 600, 372 520 C 452 522, 506 572, 512 660 Z" fill="#6DB24F"/>
+    <path d="M512 620 C 580 600, 640 540, 650 460 C 568 468, 514 530, 512 620 Z" fill="#8CCB5E"/>
+    <path d="M512 660 C 470 640, 430 600, 400 548" stroke="#3E7E34" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <path d="M512 620 C 556 596, 598 552, 625 490" stroke="#4E9A3E" stroke-width="8" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

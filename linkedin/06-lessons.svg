@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350" role="img" aria-labelledby="title desc">
+<title id="title">Lessons learned the hard way.</title>
+<desc id="desc">Four real API and database behaviours found while building, each now pinned by a test or a note.</desc>
+<rect width="1080" height="1350" fill="#f6efdf"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="72" y="82" font-size="21" fill="#806035" font-weight="700" letter-spacing="3">SUN BREWED HOMESTEAD</text>
+<text x="1008" y="82" font-size="18" fill="#536649" font-family="Menlo, monospace" text-anchor="end">FIELD NOTES / 06</text>
+<path d="M72 113H1008" stroke="#cabb9f"/>
+<text x="72" y="219" font-size="72" fill="#223c2b" font-family="Georgia, serif">Lessons learned</text>
+<text x="72" y="305" font-size="72" fill="#47733e" font-family="Georgia, serif">the hard way.</text>
+<text x="72" y="370" font-size="34" fill="#223c2b">Each one is now a test or a written note.</text>
+<rect x="72" y="416" width="936" height="150" rx="18" fill="#fffaf0" stroke="#d9cbb4"/>
+<text x="108" y="462" font-size="24" fill="#806035" font-weight="700" letter-spacing="1.5">LINEAR</text>
+<text x="108" y="510" font-size="30" fill="#223c2b">Rate limits arrive as HTTP 400, not 429.</text>
+<text x="108" y="548" font-size="28" fill="#536649">Read the body first, or retryable work dies.</text>
+<rect x="72" y="582" width="936" height="150" rx="18" fill="#fffaf0" stroke="#d9cbb4"/>
+<text x="108" y="628" font-size="24" fill="#806035" font-weight="700" letter-spacing="1.5">DISCORD</text>
+<text x="108" y="676" font-size="30" fill="#223c2b">New roles all tie at position 1.</text>
+<text x="108" y="714" font-size="28" fill="#536649">My test fake assumed they shift. Production didn’t.</text>
+<rect x="72" y="748" width="936" height="150" rx="18" fill="#fffaf0" stroke="#d9cbb4"/>
+<text x="108" y="794" font-size="24" fill="#806035" font-weight="700" letter-spacing="1.5">POSTGRES</text>
+<text x="108" y="842" font-size="30" fill="#223c2b">Upserts check constraints before the conflict.</text>
+<text x="108" y="880" font-size="28" fill="#536649">A stock ledger that updates first, inserts second.</text>
+<rect x="72" y="914" width="936" height="150" rx="18" fill="#fffaf0" stroke="#d9cbb4"/>
+<text x="108" y="960" font-size="24" fill="#806035" font-weight="700" letter-spacing="1.5">GITHUB ACTIONS</text>
+<text x="108" y="1008" font-size="30" fill="#223c2b">~24 billed minutes per push → ~8.</text>
+<text x="108" y="1046" font-size="28" fill="#536649">A 330 MB cache was evicting the Rust cache.</text>
+<rect x="72" y="1088" width="936" height="123" rx="18" fill="#173224"/>
+<text x="108" y="1140" font-size="34" fill="#fff2d9" font-weight="700">Less admin, more garden.</text>
+<text x="108" y="1184" font-size="30" fill="#c0d4b5">That’s the whole point of the software.</text>
+<path d="M72 1249H1008" stroke="#cabb9f"/>
+<text x="72" y="1297" font-size="20" fill="#536649" letter-spacing="1.5">FOUND WHILE BUILDING · PINNED IN THE REPO</text>
+<text x="1008" y="1297" font-size="24" fill="#806035" text-anchor="end">6 / 6</text>
+</g></svg>

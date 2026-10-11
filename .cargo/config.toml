@@ -1,0 +1,5 @@
+# Local development defaults. Real deployments set DATABASE_URL explicitly;
+# cargo never overrides a variable already present in the environment.
+# `#[sqlx::test]` creates a throwaway database per test on this server.
+[env]
+DATABASE_URL = "postgres://postgres:homestead@localhost:54329/homestead"
