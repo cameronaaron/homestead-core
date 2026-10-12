@@ -10,9 +10,9 @@
     "@cloudflare/containers": "0.3.7"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^5.20261002.1",
+    "@cloudflare/workers-types": "^5.20261004.1",
     "typescript": "^7",
-    "wrangler": "4.146.0"
+    "wrangler": "4.147.0"
   },
   "overrides": {
     "undici": "7.30.0",
