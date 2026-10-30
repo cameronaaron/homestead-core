@@ -6,4 +6,4 @@
 # would re-download the image and risk Docker Hub's rate limits.
 # v2.19.0 (tested end to end locally with scripts/onboarding-e2e.sh, which
 # runs this exact image). Dependabot proposes new versions (tag and digest).
-FROM docker.io/documenso/documenso:v2.19.0@sha256:a0592ef8edbc8d74e5e236d9c2dffb3fc4f0104a3ea1c52baaae4673799d8d91
+FROM docker.io/documenso/documenso:v2.21.1@sha256:41a69062febc915d1508b87be8c5bbe72ecd3c49232ddcd983490f5f7832f053
