@@ -29,7 +29,7 @@ services:
     restart: unless-stopped
 
   documenso:
-    image: documenso/documenso:v2.19.0 # match deploy/documenso/cloudflare/Dockerfile
+    image: documenso/documenso:v2.21.1 # match deploy/documenso/cloudflare/Dockerfile
     depends_on:
       database:
         condition: service_healthy
